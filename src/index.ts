@@ -10,10 +10,10 @@ import { PORT } from './constants';
 const app = express();
 connectToDB();
 
+app.use(checkClient);
 app.use(express.json());
 app.use(cookieParser());
 app.use(checkDBConnection);
-app.use(checkClient);
 
 app.use('/api/user/', userRoutes);
 
