@@ -9,8 +9,6 @@ export const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || '';
 export const SECRET = process.env.SECRET || '';
 export const PORT = process.env.PORT || '5000';
 
-console.log(process.env.DB_CONNECTION_STRING);
-
 export const MESSAGE_STATUS = {
   SENT: 0,
   DELIVERED: 1,

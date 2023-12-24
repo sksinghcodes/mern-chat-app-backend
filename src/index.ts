@@ -7,8 +7,6 @@ import checkClient from './middlewares/checkClient';
 import userRoutes from './routes/user';
 import { PORT } from './constants';
 
-console.log(process.env);
-
 const app = express();
 connectToDB();
 
