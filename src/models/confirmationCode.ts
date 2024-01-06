@@ -22,6 +22,6 @@ const confirmationCodeSchema = new Schema({
   },
 });
 
-const ConfirmationCodeModel = model('ConfirmationCode', confirmationCodeSchema);
+const ConfirmationCode = model('ConfirmationCode', confirmationCodeSchema);
 
-export default ConfirmationCodeModel;
+export default ConfirmationCode;

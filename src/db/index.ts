@@ -6,7 +6,7 @@ export const connectToDB = async function () {
   return await mongoose
     .connect(DB_CONNECTION_STRING)
     .then(() => {
-      console.log('Database connection successfull');
+      console.log('Database connection successful');
     })
     .catch((e) => {
       console.log('Database connection failed');
@@ -18,7 +18,7 @@ export const checkDBConnection = function (req: Request, res: Response, next: Ne
   if (mongoose.connection.readyState === 1) {
     next();
   } else {
-    res.json({
+    res.status(503).json({
       success: false,
       error: {
         message: 'Database connection issue',

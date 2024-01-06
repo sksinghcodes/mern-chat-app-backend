@@ -1,4 +1,8 @@
 {
+  "ts-node-dev": {
+    "files": true
+  },
+  "files": ["src/index.ts", "@types/global.d.ts"],
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
@@ -7,6 +11,6 @@
     "esModuleInterop": true,
     "typeRoots": ["./@types", "./node_modules/@types"]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "@types/global.d.ts"],
   "exclude": ["node_modules"]
 }

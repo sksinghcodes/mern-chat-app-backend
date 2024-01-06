@@ -6,21 +6,53 @@ import User from '../models/user';
 import ConfirmationCode from '../models/confirmationCode';
 import nextTenMinutes from '../utils/nextTenMinutes';
 import sendMail from '../utils/sendEmail';
-import { CODE_PURPOSE, ENV_TYPE_IS_PROD } from '../constants';
+import { CODE_PURPOSE } from '../constants';
 import authenticatePassword from '../utils/authenticatePassword';
-
-interface UserIdRequest extends Request {
-  userId: string;
-}
+// import Connection from '../models/connection';
 
 const setTokenOnResponse = (res: Response, userId: string) => {
   const token = jwt.sign({ userId: userId }, JWT_SECRET_KEY);
 
   res.cookie('jwt-token', token, {
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
     httpOnly: true, // accessible only by web server
-    secure: ENV_TYPE_IS_PROD === '1', // https
+    secure: true, // https
     sameSite: 'none', // cross site cookie
   });
+};
+
+export const getUsers = async (req: Request, res: Response) => {
+  const page = parseInt(req.query.page as string) || 1;
+  const perPage = parseInt(req.query.perPage as string) || 10;
+
+  try {
+    // const connections = await Connection.find({ userId: req.userId });
+
+    const totalCount = await User.countDocuments();
+    const totalPages = Math.ceil(totalCount / perPage);
+    const users = await User.find(
+      { _id: { $ne: req.userId } },
+      { firstName: 1, lastName: 1, username: 1 },
+    )
+      .skip((page - 1) * perPage)
+
+      .limit(perPage);
+
+    res.status(200).json({
+      success: true,
+      data: users,
+      perPage,
+      totalPages,
+      totalCount,
+      page,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+    });
+  }
 };
 
 export const signUp = async (req: Request, res: Response) => {
@@ -293,7 +325,7 @@ export const checkUnique = async (req: Request, res: Response) => {
 export const checkLoggedInStatus = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne(
-      { _id: (req as UserIdRequest).userId },
+      { _id: req.userId },
       {
         first_name: 1,
         last_name: 1,
@@ -321,7 +353,7 @@ export const signOut = async (req: Request, res: Response) => {
         expires: new Date(0),
         httpOnly: true,
         sameSite: 'none',
-        secure: ENV_TYPE_IS_PROD === '1',
+        secure: true,
       })
       .status(200)
       .json({

@@ -4,6 +4,7 @@ const conversationSchema = new Schema(
   {
     participants: {
       type: [Schema.Types.ObjectId],
+      ref: 'User',
       required: true,
     },
     isGroupChat: {
@@ -16,6 +17,6 @@ const conversationSchema = new Schema(
   },
 );
 
-const conversationModel = model('Conversation', conversationSchema);
+const Conversation = model('Conversation', conversationSchema);
 
-export default conversationModel;
+export default Conversation;

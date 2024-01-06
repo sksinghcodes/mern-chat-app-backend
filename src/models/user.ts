@@ -34,12 +34,15 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    socketId: {
+      type: String,
+    },
   },
   {
     timestamps: true,
   },
 );
 
-const UserModel = model('User', userSchema);
+const User = model('User', userSchema);
 
-export default UserModel;
+export default User;

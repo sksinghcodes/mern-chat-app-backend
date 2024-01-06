@@ -9,11 +9,13 @@ import {
   verifyProfile,
   getPasswordResetId,
   resetPassword,
+  getUsers,
 } from '../controllers/user';
 import { validateSignUp, validateSignIn } from '../middlewares/validate';
 
 const router = express.Router();
 
+router.get('/list', isAuthenticated, getUsers);
 router.post('/sign-up', validateSignUp, signUp);
 router.post('/sign-in', validateSignIn, signIn);
 router.post('/sign-out', isAuthenticated, signOut);

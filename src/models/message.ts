@@ -28,6 +28,6 @@ const messageSchema = new Schema(
   },
 );
 
-const messageModel = model('User', messageSchema);
+const Message = model('Message', messageSchema);
 
-export default messageModel;
+export default Message;

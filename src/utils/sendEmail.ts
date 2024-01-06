@@ -1,10 +1,11 @@
 import nodemailer from 'nodemailer';
+import { MAIN_EMAIL_ADDRESS, MAIN_EMAIL_PASSWORD, MAIN_EMAIL_SERVICE } from '../constants';
 
 const transporter = nodemailer.createTransport({
-  service: process.env.MAIN_EMAIL_SERVICE,
+  service: MAIN_EMAIL_SERVICE,
   auth: {
-    user: process.env.MAIN_EMAIL_ADDRESS,
-    pass: process.env.MAIN_EMAIL_PASSWORD,
+    user: MAIN_EMAIL_ADDRESS,
+    pass: MAIN_EMAIL_PASSWORD,
   },
 });
 
